@@ -1,0 +1,39 @@
+# This file shows some examples of requests accepted by the API endpoint
+# and the type of parameters accepted/specifications
+# Requires the REST Client extension in VS Code to run directly
+
+# Test if our endpoint is running
+GET http://localhost:3000/shorten_url
+
+###
+# POST a valid URL, should receive a UUID
+POST http://localhost:3000/shorten_url
+Content-Type: application/json
+
+{
+    "url": "https://www.google.com"
+}
+
+
+###
+# GET the original URL by providing UUID in parameter, modify UUID as needed
+GET http://localhost:3000/shorten_url/c2ecc6ce-7b0d-480f-8063-5cecb89c0dc7
+
+
+###
+# POST an invalid URL with wrong format , should receive an error 404 saying invalid URL provided.
+POST http://localhost:3000/shorten_url
+Content-Type: application/json
+
+{
+    "url": "123123123123"
+}
+
+###
+# POST an inaccessible URL, should receive an error 404 saying URL is not accessible
+POST http://localhost:3000/shorten_url
+Content-Type: application/json
+
+{
+    "url": "https://www.google.com.com"
+}

@@ -13,10 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Simulate ARM64 Push
+      - name: Simulate ARM64 Pull
         if: ${{ contains(inputs.to-ecr-tag, 'arm') }}
-        run: echo "Simulating push to ARM64 for ${{ inputs.to-ecr-tag }}"
+        run: echo "Simulating pull to ARM64 for ${{ inputs.to-ecr-tag }}"
 
-      - name: Simulate Default Push
+      - name: Simulate Default Pull
         if: ${{ !contains(inputs.to-ecr-tag, 'arm') }}
-        run: echo "Simulating push to Default for ${{ inputs.to-ecr-tag }}"
+        run: echo "Simulating pull to Default for ${{ inputs.to-ecr-tag }}"
+      
+      - name: Simulate Tag and Push
+        run: echo "Simulating docker tag and push.... "

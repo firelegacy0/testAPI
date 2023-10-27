@@ -1,0 +1,22 @@
+name: Test Mirror ECR Conditionals
+
+on:
+  workflow_dispatch:
+    inputs:
+      to-ecr-tag:
+        description: 'Tag for the ECR image'
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Simulate ARM64 Push
+        if: ${{ contains(inputs.to-ecr-tag, 'arm') }}
+        run: echo "Simulating push to ARM64 for ${{ inputs.to-ecr-tag }}"
+
+      - name: Simulate Default Push
+        if: ${{ !contains(inputs.to-ecr-tag, 'arm') }}
+        run: echo "Simulating push to Default for ${{ inputs.to-ecr-tag }}"

@@ -1,2 +1,2 @@
 console.log("Hello Pelanggan")
-console.log("Hello Pelanggan 1")
+console.log("Hello Pelanggan 12")

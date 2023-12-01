@@ -20,3 +20,6 @@ javascript:
 # Changes in any folder in repository
 requires review:
   - '**/*'
+
+dev ex:
+  - .github/**/*

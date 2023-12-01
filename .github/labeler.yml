@@ -16,3 +16,5 @@ enjin-pelanggan:
 javascript:
   - enjin-pelanggan/**/*
 
+requires review:
+  - '**/*'

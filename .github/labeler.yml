@@ -1,5 +1,18 @@
-frontend:
-  - frontend/**/*
+enjin-proksi:
+  - enjin-proksi/**/*
 
-backend:
-  - backend/**/*
+go:
+  - enjin-proksi/**/*
+
+enjin-core:
+  - enjin-core/**/*
+
+python:
+  - enjin-core/**/*
+
+enjin-pelanggan:
+  - enjin-pelanggan/**/*
+
+javascript:
+  - enjin-pelanggan/**/*
+

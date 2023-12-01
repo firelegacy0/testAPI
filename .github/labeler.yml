@@ -15,6 +15,7 @@ enjin-pelanggan:
 
 javascript:
   - enjin-pelanggan/**/*
+  - enjin-proksi/**/*
 
 requires review:
   - '**/*'

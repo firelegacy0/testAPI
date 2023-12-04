@@ -24,5 +24,6 @@ requires review:
   - '**/.*/**'
   - '**/.*/**/.*'
 
-dev ex:
+ci/cd:
   - .github/**/*
+

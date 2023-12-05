@@ -27,3 +27,21 @@ requires review:
 ci/cd:
   - .github/**/*
 
+dependencies:
+  # Node.js project files (pnpm)
+  - '**/package.json'
+  - '**/pnpm-lock.yaml'
+
+  # Python project files (poetry)
+  - '**/pyproject.toml'
+  - '**/poetry.lock'
+
+  # General config files
+  - '**/*.yaml'
+  - '**/*.yml'
+  - '**/Dockerfile'
+
+# Convenience scripts typically
+dev ex:
+  - '**/*.sh'
+

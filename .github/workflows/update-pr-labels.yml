@@ -40,6 +40,7 @@ jobs:
               labelToAdd = 'requires review';
               labelToRemove = 'Changes Requested';
             }
+          }
 
             // Check if labelToRemove exists before attempting to remove it
             if (labelToRemove) {

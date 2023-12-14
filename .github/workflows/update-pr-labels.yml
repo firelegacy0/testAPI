@@ -1,12 +1,10 @@
-name: Update PR Labels
-
-permissions:
-  contents: read
-  pull-requests: write
+name: PR Review Workflow
 
 on:
   pull_request_review:
     types: [submitted, dismissed]
+  issue_comment:
+    types: [created]
 
 jobs:
   update-labels:
@@ -17,49 +15,66 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber = context.payload.pull_request.number;
+          const prNumber = context.payload.pull_request ? context.payload.pull_request.number : context.issue.number;
           const owner = context.repo.owner;
           const repo = context.repo.repo;
-          const reviewState = context.payload.review.state;
-          
-          // Define label to add and remove based on the review state
+          const reviewState = context.payload.review ? context.payload.review.state : '';
+
           let labelToAdd = '';
-          let labelToRemove = 'requires review'; // Default label to remove
-          
+          let labelToRemove = '';
+
           if (reviewState === 'approved') {
             labelToAdd = 'Approved';
+            labelToRemove = 'requires review';
           } else if (reviewState === 'changes_requested') {
             labelToAdd = 'Changes Requested';
+            labelToRemove = 'requires review';
           } else if (reviewState === 'dismissed') {
             labelToAdd = 'requires review';
             labelToRemove = 'Changes Requested';
           }
-          
-          // Remove label
-          try {
-            await github.rest.issues.removeLabel({
-              owner,
-              repo,
-              issue_number: prNumber,
-              name: labelToRemove
-            });
-            console.log(`Label '${labelToRemove}' removed`);
-          } catch (error) {
-            if (error.status !== 404) {
-              throw error;
+
+          // Fetch current labels on the PR
+          const currentLabelsResponse = await github.rest.issues.listLabelsOnIssue({
+            owner,
+            repo,
+            issue_number: prNumber,
+          });
+          const currentLabels = currentLabelsResponse.data.map(label => label.name);
+
+          // Check if label changes are necessary
+          const needsLabelToAdd = labelToAdd && !currentLabels.includes(labelToAdd);
+          const needsLabelToRemove = labelToRemove && currentLabels.includes(labelToRemove);
+
+          // Remove label if necessary
+          if (needsLabelToRemove) {
+            try {
+              await github.rest.issues.removeLabel({
+                owner,
+                repo,
+                issue_number: prNumber,
+                name: labelToRemove
+              });
+              console.log(`Label '${labelToRemove}' removed`);
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+              console.log(`Label '${labelToRemove}' not found, skipping.`);
             }
-            console.log(`Label '${labelToRemove}' not found, skipping.`);
           }
           
-          // Add label
-          try {
-            await github.rest.issues.addLabels({
-              owner,
-              repo,
-              issue_number: prNumber,
-              labels: [labelToAdd]
-            });
-            console.log(`Label '${labelToAdd}' added`);
-          } catch (error) {
-            throw error;
+          // Add label if necessary
+          if (needsLabelToAdd) {
+            try {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: prNumber,
+                labels: [labelToAdd]
+              });
+              console.log(`Label '${labelToAdd}' added`);
+            } catch (error) {
+              throw error;
+            }
           }

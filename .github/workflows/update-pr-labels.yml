@@ -28,7 +28,7 @@ jobs:
           
           if (reviewState === 'approved') {
             labelToAdd = 'Approved';
-          } else if (reviewState === 'changes_requested') {
+          } else if (reviewState === 'changes requested') {
             labelToAdd = 'Changes Requested';
           } else if (reviewState === 'dismissed') {
             labelToAdd = 'requires review';

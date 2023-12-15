@@ -24,7 +24,7 @@ jobs:
 
           let labelsUpdated = false;
           let labelToAdd = '';
-          let labelToRemove = [];
+          let labelsToRemove = [];
 
           if (reviewState === 'approved') {
             labelToAdd = 'approved';
@@ -39,28 +39,24 @@ jobs:
             labelsToRemove = ['approved', 'changes requested'];
           }
 
-          // Check if there are labels to remove, because any comments added during
-          // Changes Requested State is considered as pull_request_review submitted 
-          if (labelsToRemove.length > 0 ) {
-            console.log("Inside labels check")
-            for (const label of labelsToRemove) {
-              try {
-                await github.rest.issues.removeLabel({
-                  owner,
-                  repo,
-                  issue_number: prNumber,
-                  name: label
-                });
-                console.log(`Label '${label}' removed`);
-                labelsUpdated = true;
-              } catch (error) {
-                if (error.status !== 404) {
-                  throw error;
-                }
-                console.log(`Label '${label}' not found, skipping.`);
+          for (const label of labelsToRemove) {
+            try {
+              await github.rest.issues.removeLabel({
+                owner,
+                repo,
+                issue_number: prNumber,
+                name: label
+              });
+              console.log(`Label '${label}' removed`);
+              labelsUpdated = true;
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
               }
+              console.log(`Label '${label}' not found, skipping.`);
             }
           }
+          
 
           // Check if labelToAdd is non-empty before attempting to add it
           if (labelToAdd) {

@@ -77,5 +77,5 @@ jobs:
           }
 
           if (!labelsUpdated) {
-            console.log("No labels updated")
+            console.log("No new review action, no labels updated")
           }

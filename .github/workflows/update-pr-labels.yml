@@ -42,6 +42,7 @@ jobs:
           // Check if there are labels to remove, because any comments added during
           // Changes Requested State is considered as pull_request_review submitted 
           if (labelsToRemove.length > 0 ) {
+            console.log("Inside labels check")
             for (const label of labelsToRemove) {
               try {
                 await github.rest.issues.removeLabel({

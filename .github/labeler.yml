@@ -17,13 +17,6 @@ javascript:
   - enjin-pelanggan/**/*
   - enjin-proksi/**/*
 
-# Changes in any folder in repository
-requires review:
-  - '**'
-  - '**/.*'
-  - '**/.*/**'
-  - '**/.*/**/.*'
-
 ci/cd:
   - .github/**/*
 

@@ -20,24 +20,23 @@ jobs:
           const prNumber = context.payload.pull_request.number;
           const owner = context.repo.owner;
           const repo = context.repo.repo;
-          const reviewAction = context.payload.action;
           const reviewState = context.payload.review.state;
 
+          let labelsUpdated = false;
           let labelToAdd = '';
           let labelToRemove = '';
 
-          // Proceed only if the action is a review submission or dismissal
-          if (reviewAction === 'submitted' || reviewAction === 'dismissed') {
-            if (reviewState === 'approved') {
-              labelToAdd = 'Approved';
-              labelToRemove = 'requires review';
-            } else if (reviewState === 'changes_requested') {
-              labelToAdd = 'Changes Requested';
-              labelToRemove = 'requires review';
-            } else if (reviewState === 'dismissed') {
-              labelToAdd = 'requires review';
-              labelToRemove = 'Changes Requested';
-            }
+          if (reviewState === 'approved') {
+            labelToAdd = 'approved';
+            labelToRemove = 'requires review';
+
+          } else if (reviewState === 'changes_requested') {
+            labelToAdd = 'changes requested';
+            labelToRemove = 'requires review';
+
+          } else if (reviewState === 'dismissed') {
+            labelToAdd = 'requires review';
+            labelToRemove = 'changes requested';
           }
 
           // Check if labelToRemove exists before attempting to remove it
@@ -50,6 +49,8 @@ jobs:
                 name: labelToRemove
               });
               console.log(`Label '${labelToRemove}' removed`);
+              labelsUpdated = true;
+
             } catch (error) {
               if (error.status !== 404) {
                 throw error;
@@ -68,7 +69,13 @@ jobs:
                 labels: [labelToAdd]
               });
               console.log(`Label '${labelToAdd}' added`);
+              labelsUpdated = true;
+
             } catch (error) {
               throw error;
             }
+          }
+
+          if (!labelsUpdated) {
+            console.log("No labels updated")
           }

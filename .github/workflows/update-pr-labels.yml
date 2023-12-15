@@ -20,20 +20,24 @@ jobs:
           const prNumber = context.payload.pull_request.number;
           const owner = context.repo.owner;
           const repo = context.repo.repo;
+          const reviewAction = context.payload.action;
           const reviewState = context.payload.review.state;
 
           let labelToAdd = '';
           let labelToRemove = '';
 
-          if (reviewState === 'approved') {
-            labelToAdd = 'Approved';
-            labelToRemove = 'requires review';
-          } else if (reviewState === 'changes_requested') {
-            labelToAdd = 'Changes Requested';
-            labelToRemove = 'requires review';
-          } else if (reviewState === 'dismissed') {
-            labelToAdd = 'requires review';
-            labelToRemove = 'Changes Requested';
+          // Proceed only if the action is a review submission or dismissal
+          if (reviewAction === 'submitted' || reviewAction === 'dismissed') {
+            if (reviewState === 'approved') {
+              labelToAdd = 'Approved';
+              labelToRemove = 'requires review';
+            } else if (reviewState === 'changes_requested') {
+              labelToAdd = 'Changes Requested';
+              labelToRemove = 'requires review';
+            } else if (reviewState === 'dismissed') {
+              labelToAdd = 'requires review';
+              labelToRemove = 'Changes Requested';
+            }
           }
 
           // Check if labelToRemove exists before attempting to remove it

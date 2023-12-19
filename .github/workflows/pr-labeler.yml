@@ -55,7 +55,7 @@ jobs:
           }
 
     - name: Label PR as 'requires review' when ready
-      if: github.event.pull_request.draft == false || github.event.action == 'ready_for_review'
+      if: github.event.pull_request.draft == false || github.event.action == 'ready_for_review' || github.event.action == 'review_requested'
       uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -72,18 +72,22 @@ jobs:
             labels: ['requires review']
           });
 
+          let labelsToRemove = ['change requested', 'on hold'];
           // Remove 'on hold' label if it was converted to ready_for_review
-          try {
-            await github.rest.issues.removeLabel({
-              owner,
-              repo,
-              issue_number: prNumber,
-              name: 'on hold'
-            });
-            console.log("Label 'on hold' removed");
-          } catch (error) {
-            if (error.status !== 404) {
-              throw error;
+          for (const label of labelsToRemove) {
+            try {
+              await github.rest.issues.removeLabel({
+                owner,
+                repo,
+                issue_number: prNumber,
+                name: label
+              });
+              console.log(`Label '${label}' removed`);
+              labelsUpdated = true;
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+              console.log(`Label '${label}' not found, skipping.`);
             }
-            console.log("Label 'on hold' not found, skipping.");
           }

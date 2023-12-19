@@ -1,10 +1,14 @@
 comment:
   on-update: recreate
-  header: "Automated PR Review Reminder"
-  footer: "Thank you for contributing!"
+  header: |
+    Hello! :tada:.
+
+  footer: |
+    ---
+    Automated comment created by [PR Commenter](https://github.com/exercism/pr-commenter-action) :robot:.
   snippets:
     - id: env-file-changed
       files:
-        - '**/.env'
+        - '**/.env.*'
       body: |
-        :warning: You've modified a `.env` file. Please ensure that any new environment variables are communicated to the infrastructure team for proper setup in all environments.
+        :warning: It looks like you're changing a `.env` file. Please ensure that any new environment variables are communicated to the infrastructure team for proper setup in all environments.

@@ -15,3 +15,7 @@ jobs:
         with:
           github-token: "${{ github.token }}"
           config-file: ".github/pr-commenter.yml"
+          template-variables: |
+            {
+              "prAuthor": "${{ github.event.pull_request.user.login }}",
+            }

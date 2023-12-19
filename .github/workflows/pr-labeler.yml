@@ -72,7 +72,7 @@ jobs:
             labels: ['requires review']
           });
 
-          let labelsToRemove = ['change requested', 'on hold'];
+          let labelsToRemove = ['changes requested', 'on hold'];
           // Remove 'on hold' label if it was converted to ready_for_review
           for (const label of labelsToRemove) {
             try {

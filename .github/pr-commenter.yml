@@ -1,7 +1,7 @@
 comment:
   on-update: recreate
   header: |
-    :wave: Hello @{{ github.event.pull_request.user.login }}
+    :wave: Hello {{ prAuthor }}!
 
   footer: |
     ---

@@ -1,40 +1,59 @@
 enjin-proksi:
-  - enjin-proksi/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - enjin-proksi/**
+
 
 go:
-  - enjin-proksi/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - enjin-proksi/**
 
 enjin-core:
-  - enjin-core/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - enjin-core/**
 
 python:
-  - enjin-core/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - enjin-core/**
 
 enjin-pelanggan:
-  - enjin-pelanggan/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - enjin-pelanggan/**
 
 javascript:
-  - enjin-pelanggan/**/*
-  - enjin-proksi/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - enjin-pelanggan/**
+    - enjin-proksi/**
 
 ci/cd:
-  - .github/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/**
 
 dependencies:
-  # Node.js project files (pnpm)
-  - '**/package.json'
-  - '**/pnpm-lock.yaml'
+- changed-files:
+  - any-glob-to-any-file:
+    # Node.js project files (pnpm)
+    - '**/package.json'
+    - '**/pnpm-lock.yaml'
 
-  # Python project files (poetry)
-  - '**/pyproject.toml'
-  - '**/poetry.lock'
+    # Python project files (poetry)
+    - '**/pyproject.toml'
+    - '**/poetry.lock'
 
-  # General config files
-  - '**/*.yaml'
-  - '**/*.yml'
-  - '**/Dockerfile'
+    # General config files
+    - '**/*.yaml'
+    - '**/*.yml'
+    - '**/Dockerfile'
 
 # Convenience scripts typically
 dev ex:
-  - '**/*.sh'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.sh'
 

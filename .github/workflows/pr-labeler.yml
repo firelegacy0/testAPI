@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - uses: actions/labeler@v4
+    - uses: actions/labeler@v5
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
         configuration-path: .github/labeler.yml
@@ -38,7 +38,7 @@ jobs:
             labels: ['on hold']
           });
 
-          // Remove 'requires review' label
+          // Remove 'requires review' label if it was converted_to_draft
           try {
             await github.rest.issues.removeLabel({
               owner,
@@ -72,7 +72,7 @@ jobs:
             labels: ['requires review']
           });
 
-          // Remove 'on hold' label
+          // Remove 'on hold' label if it was converted to ready_for_review
           try {
             await github.rest.issues.removeLabel({
               owner,

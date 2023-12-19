@@ -21,6 +21,7 @@ jobs:
           const owner = context.repo.owner;
           const repo = context.repo.repo;
           const reviewState = context.payload.review.state;
+          console.log("Hi")
 
           let labelsUpdated = false;
           let labelToAdd = '';

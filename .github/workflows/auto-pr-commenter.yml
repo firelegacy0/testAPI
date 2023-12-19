@@ -17,5 +17,5 @@ jobs:
           config-file: ".github/pr-commenter.yml"
           template-variables: |
             {
-              "prAuthor": "${{ github.event.pull_request.user.login }}",
+              "prAuthor": "${{ github.event.pull_request.user.login }}"
             }

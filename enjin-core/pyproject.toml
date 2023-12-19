@@ -1,5 +1,5 @@
 [tool.poetry]
 name = "enjin"
 version = "1.0.0"
-description = ""
+description = "1"
 authors = ["Courtsite <tech@courtsite.my>"]

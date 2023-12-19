@@ -1,7 +1,7 @@
 comment:
   on-update: recreate
   header: |
-    Hello! :tada:.
+    :wave: Hello @{{ github.event.pull_request.user.login }}
 
   footer: |
     ---
@@ -11,6 +11,8 @@ comment:
       files:
         - '**/.env.*'
       body: |
-        :warning: It looks like you're changing a `.env` file.
+        :eyes: It looks like you're changing a `.env` file.
+
         Please ensure any new environment variables are communicated to the infrastructure team for proper setup in their target environments.
+        
         /cc @waterlegacy0

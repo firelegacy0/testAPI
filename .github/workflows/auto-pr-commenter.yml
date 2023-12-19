@@ -1,0 +1,17 @@
+name: "Auto PR Commenter"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request_target
+
+jobs:
+  pr-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: exercism/pr-commenter-action@v1.5.1
+        with:
+          github-token: "${{ github.token }}"
+          config-file: ".github/pr-commenter.yml"

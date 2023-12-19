@@ -11,4 +11,6 @@ comment:
       files:
         - '**/.env.*'
       body: |
-        :warning: It looks like you're changing a `.env` file. Please ensure that any new environment variables are communicated to the infrastructure team for proper setup in all environments.
+        :warning: It looks like you're changing a `.env` file.
+        Please ensure any new environment variables are communicated to the infrastructure team for proper setup in their target environments.
+        /cc @waterlegacy0

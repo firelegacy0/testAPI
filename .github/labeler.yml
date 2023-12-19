@@ -35,6 +35,11 @@ ci/cd:
   - any-glob-to-any-file:
     - .github/**
 
+configuration:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/.env.*'
+
 dependencies:
 - changed-files:
   - any-glob-to-any-file:

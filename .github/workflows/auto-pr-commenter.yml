@@ -1,4 +1,4 @@
-name: "Auto PR Commenter"
+name: Auto PR Commenter
 
 permissions:
   contents: read
@@ -11,11 +11,32 @@ jobs:
   pr-comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: exercism/pr-commenter-action@v1.5.1
+      # - uses: exercism/pr-commenter-action@v1.5.1
+      #   with:
+      #     github-token: "${{ github.token }}"
+      #     config-file: ".github/pr-commenter.yml"
+      #     template-variables: |
+      #       {
+      #         "prAuthor": "${{ github.event.pull_request.user.login }}"
+      #       }
+      - name: Check for .env file changes
+        id: env_check
+        run: |
+          echo "ENV_FILE_CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q '.env.' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+
+      - name: Comment PR
+        uses: mshick/add-pr-comment@v2
         with:
-          github-token: "${{ github.token }}"
-          config-file: ".github/pr-commenter.yml"
-          template-variables: |
-            {
-              "prAuthor": "${{ github.event.pull_request.user.login }}"
-            }
+          message: |
+            :wave: Hello @${{ github.event.pull_request.user.login }}!
+
+            ${{ if eq(env.ENV_FILE_CHANGED, 'true') }}:eyes: It looks like you're changing a `.env` file.
+
+            Please ensure any new environment variables are communicated to the infrastructure team for proper setup in their target environments.
+            
+            /cc @waterlegacy0${{ end }}
+
+            ---
+            Automated comment created by [PR Commenter](https://github.com/mshick/add-pr-comment) :robot:.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

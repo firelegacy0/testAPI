@@ -22,19 +22,20 @@ jobs:
       - name: Check for .env file changes
         id: env_check
         run: |
-          echo "ENV_FILE_CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q '.env.' && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          echo "::set-output name=file_changed::$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q '.env.' && echo 'true' || echo 'false')"
 
-      - name: Comment PR
+      - name: Comment PR if .env files changed
+        if: steps.env_check.outputs.file_changed == 'true'
         uses: mshick/add-pr-comment@v2
         with:
           message: |
             :wave: Hello @${{ github.event.pull_request.user.login }}!
 
-            ${{ if eq(env.ENV_FILE_CHANGED, 'true') }}:eyes: It looks like you're changing a `.env` file.
+            :eyes: It looks like you're changing a `.env` file.
 
             Please ensure any new environment variables are communicated to the infrastructure team for proper setup in their target environments.
             
-            /cc @waterlegacy0${{ end }}
+            /cc @waterlegacy0
 
             ---
             Automated comment created by [PR Commenter](https://github.com/mshick/add-pr-comment) :robot:.

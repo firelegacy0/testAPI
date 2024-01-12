@@ -10,6 +10,7 @@ comment:
     - id: env-file-changed
       files:
         - '**/.env.*'
+        - '**/.dev.env'
       body: |
         :eyes: It looks like you're changing a `.env` file.
 

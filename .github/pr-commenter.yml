@@ -20,7 +20,7 @@ comment:
 
     - id: migration-file-changed
       files:
-        - 'enjin-core/enjin/*/repository/migrations/versions/**'
+        - 'enjin-core/enjin/*/repository/migrations/versions/**.py'
       body: |
         :eyes: It looks like you're applying migration script changes.
 

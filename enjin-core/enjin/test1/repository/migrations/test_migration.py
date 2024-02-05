@@ -1,0 +1,1 @@
+print("Hello World some migration alembic script")

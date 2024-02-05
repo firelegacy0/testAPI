@@ -22,7 +22,7 @@ comment:
       files:
         - 'enjin-core/enjin/*/repository/migrations/versions/**.py'
       body: |
-        :eyes: It looks like you're applying migration script changes.
+        :eyes: It looks like you're applying **migration script changes**.
 
         Please ensure the upgrade/downgrade versions are communicated to the infrastructure team for proper setup in their target environments.
         

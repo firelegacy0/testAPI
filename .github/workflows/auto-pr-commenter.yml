@@ -1,4 +1,4 @@
-name: Auto PR Commenter
+name: "Auto PR Commenter"
 
 permissions:
   contents: read
@@ -19,31 +19,3 @@ jobs:
             {
               "prAuthor": "${{ github.event.pull_request.user.login }}"
             }
-      # - uses: actions/checkout@v4
-      #   with:
-      #     fetch-depth: 0
-      # - name: Check for .env file changes
-      #   id: env_check
-      #   run: |
-      #     if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q '.env.'; then
-      #       echo "changed=true" >> $GITHUB_ENV
-      #     else
-      #       echo "changed=false" >> $GITHUB_ENV
-      #     fi
-
-      # - name: Comment PR if .env files changed
-      #   if: env.changed == 'true'
-      #   uses: mshick/add-pr-comment@v2
-      #   with:
-      #     message: |
-      #       :wave: Hello @${{ github.event.pull_request.user.login }}!
-      #       :eyes: It looks like you're changing a `.env` file.
-
-      #       Please ensure any new environment variables are communicated to the infrastructure team for proper setup in their target environments.
-            
-      #       /cc @waterlegacy0
-
-      #       ---
-      #       Automated comment created by [PR Commenter](https://github.com/mshick/add-pr-comment) :robot:.
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

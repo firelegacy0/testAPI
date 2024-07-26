@@ -18,4 +18,3 @@ jobs:
           echo "Commit Message: ${{ env.UPDATE_DESCRIPTION }}"
           echo "Simulating syntax error"
           eval "echo ${UPDATE_DESCRIPTION}"
-

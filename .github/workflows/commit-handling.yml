@@ -29,13 +29,12 @@ jobs:
           IFS=$oldIFS
 
           # Handle special characters in commit message
-          head_commit_message="${{ github.event.head_commit.message }}"
+          head_commit_message="${{ github.event.pull_request.title }}"
           echo "ORIGINAL_COMMIT_MESSAGE=${head_commit_message}" >> $GITHUB_ENV
           truncated_commit_message=$(printf "%s\n" "$head_commit_message" | head -1)
           echo "TRUNCATED_COMMIT_MESSAGE=${truncated_commit_message}" >> $GITHUB_ENV
           echo "UPDATE_DESCRIPTION=${truncated_commit_message}" >> $GITHUB_ENV
           echo "UPDATE_RELEASE=${formatted_ref:0:7}" >> $GITHUB_ENV
-
 
       - name: Display environment variables
         run: |

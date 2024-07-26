@@ -8,28 +8,17 @@ on:
 jobs:
   test-commit-message:
     runs-on: ubuntu-latest
+    env:
+      UPDATE_DESCRIPTION: ${{ github.event.head_commit.message }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Encode Commit Message
-        run: |
-          # Base64 encode the commit message to avoid special characters issues
-          encoded_message=$(echo "${{ github.event.head_commit.message }}" | base64)
-          echo "UPDATE_DESCRIPTION=${encoded_message}" >> $GITHUB_ENV
-    
-
-      - name: Decode and Use Commit Message
-        run: |
-          # Decode the base64 encoded commit message
-          decoded_message=$(echo "$UPDATE_DESCRIPTION" | base64 --decode)
-          echo "Decoded Message: $decoded_message"
-        
-      
       - name: Display Commit Message
         run: |
-          echo "Commit Message: ${{ env.UPDATE_DESCRIPTION }}"
+          echo "Commit Message: $UPDATE_DESCRIPTION"
+
       - name: Simulate No Syntax Error
         run: |
+          echo "Commit Message: ${{ env.UPDATE_DESCRIPTION }}"
           echo "Simulating no syntax error"
           eval "echo ${UPDATE_DESCRIPTION}"
-          eval "echo ${decoded_message}"

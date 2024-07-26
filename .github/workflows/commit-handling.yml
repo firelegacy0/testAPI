@@ -8,14 +8,16 @@ on:
 jobs:
   test-commit-message:
     runs-on: ubuntu-latest
+    env:
+      UPDATE_DESCRIPTION: "${{ github.event.head_commit.message }}"
     steps:
       - uses: actions/checkout@v4
-      - name: Set Env Var from Commit Message
+
+      - name: Display Commit Message
         run: |
-          update_description=$(printf '%q' "${{ github.event.head_commit.message }}" | head -1)
-          echo "UPDATE_DESCRIPTION=${update_description}" >> $GITHUB_ENV
+          echo "Commit Message: $UPDATE_DESCRIPTION"
+
       - name: Simulate No Syntax Error
         run: |
-          echo "Commit Message: ${{ env.UPDATE_DESCRIPTION }}"
           echo "Simulating no syntax error"
           eval "echo ${UPDATE_DESCRIPTION}"

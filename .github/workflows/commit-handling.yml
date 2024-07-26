@@ -10,11 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set Env Var from Commit Message
-        run: |
 
-          printf -v safe_description "UPDATE_DESCRIPTION=%s" "${{ github.event.head_commit.message }}"
-          echo $safe_description | head -1 >> $GITHUB_ENV
 
 
       - name: Decode and Use Description

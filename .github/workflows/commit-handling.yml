@@ -30,15 +30,23 @@ jobs:
 
           # Handle special characters in commit message
           head_commit_message="${{ github.event.head_commit.message }}"
-          printf "UPDATE_DESCRIPTION=%s\n" "$head_commit_message" | head -1 >> $GITHUB_ENV
+          echo "ORIGINAL_COMMIT_MESSAGE=${head_commit_message}" >> $GITHUB_ENV
+          truncated_commit_message=$(printf "%s\n" "$head_commit_message" | head -1)
+          echo "TRUNCATED_COMMIT_MESSAGE=${truncated_commit_message}" >> $GITHUB_ENV
+          echo "UPDATE_DESCRIPTION=${truncated_commit_message}" >> $GITHUB_ENV
           echo "UPDATE_RELEASE=${formatted_ref:0:7}" >> $GITHUB_ENV
+
 
       - name: Display environment variables
         run: |
           echo "PROJECT_IMAGES=${PROJECT_IMAGES}"
+          echo "ORIGINAL_COMMIT_MESSAGE=${ORIGINAL_COMMIT_MESSAGE}"
+          echo "TRUNCATED_COMMIT_MESSAGE=${TRUNCATED_COMMIT_MESSAGE}"
           echo "UPDATE_DESCRIPTION=${UPDATE_DESCRIPTION}"
           echo "UPDATE_RELEASE=${UPDATE_RELEASE}"
         env:
           PROJECT_IMAGES: ${{ env.PROJECT_IMAGES }}
+          ORIGINAL_COMMIT_MESSAGE: ${{ env.ORIGINAL_COMMIT_MESSAGE }}
+          TRUNCATED_COMMIT_MESSAGE: ${{ env.TRUNCATED_COMMIT_MESSAGE }}
           UPDATE_DESCRIPTION: ${{ env.UPDATE_DESCRIPTION }}
           UPDATE_RELEASE: ${{ env.UPDATE_RELEASE }}

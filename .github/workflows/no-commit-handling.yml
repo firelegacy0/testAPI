@@ -1,4 +1,4 @@
-name: No Commit Handling
+name: replicate-issue
 
 on:
   push:
@@ -13,6 +13,9 @@ jobs:
       - name: Set Env Var from Commit Message
         run: |
           echo "UPDATE_DESCRIPTION=${{ github.event.head_commit.message }}" | head -1 >> $GITHUB_ENV
-      - name: Display Commit Message
+      - name: Simulate Syntax Error
         run: |
           echo "Commit Message: ${{ env.UPDATE_DESCRIPTION }}"
+          echo "Simulating syntax error"
+          eval "echo ${UPDATE_DESCRIPTION}"
+

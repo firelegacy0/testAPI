@@ -1,4 +1,4 @@
-name: Commit Handling
+name: No Commit Handling
 
 on:
   push:
@@ -12,8 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set Env Var from Commit Message
         run: |
-          update_description=$(printf '%s\n' "${{ github.event.head_commit.message }}" | head -1)
-          echo "UPDATE_DESCRIPTION=${update_description}" >> $GITHUB_ENV
+          echo "UPDATE_DESCRIPTION=${{ github.event.head_commit.message }}" | head -1 >> $GITHUB_ENV
       - name: Display Commit Message
         run: |
           echo "Commit Message: ${{ env.UPDATE_DESCRIPTION }}"

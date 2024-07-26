@@ -11,13 +11,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-
-
-      - name: Decode and Use Description
+      - name: Encode Commit Message
         run: |
-          # Assuming UPDATE_DESCRIPTION in $GITHUB_ENV contains the base64 encoded message
+          # Base64 encode the commit message to avoid special characters issues
+          encoded_message=$(echo "${{ github.event.head_commit.message }}" | base64)
+          echo "UPDATE_DESCRIPTION=${encoded_message}" >> $GITHUB_ENV
+    
+
+      - name: Decode and Use Commit Message
+        run: |
+          # Decode the base64 encoded commit message
           decoded_message=$(echo "$UPDATE_DESCRIPTION" | base64 --decode)
           echo "Decoded Message: $decoded_message"
+        
       
       - name: Display Commit Message
         run: |
@@ -27,4 +33,3 @@ jobs:
           echo "Simulating no syntax error"
           eval "echo ${UPDATE_DESCRIPTION}"
           eval "echo ${decoded_message}"
-          eval "echo ${safe_description}"

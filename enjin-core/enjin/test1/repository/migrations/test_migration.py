@@ -1,1 +1,1 @@
-print("Hello World some migration alembic script")
+print("Hello World some migration alembic scrpt")
